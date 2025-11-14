@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Új játék</title>
+</head>
+<body>
+    <h1>Új játék</h1>
+<form action="letrehoz/" method="post">
+    {% csrf_token %}
+    <div>
+        <p>Név:</p>
+        <input type="text" name="nev" id="nev">
+    </div>
+    <div>
+        <p>Aknaszám:</p>
+        <input type="number" name="aknaszam" id="aknaszam">
+    </div>
+    <div>
+        <button type="submit">Indítás</button>
+    </div>
+</form>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% extends "registration/base_regisztracio.html" %}
+
+{% block theh1 %}<h1>Regisztráció</h1>{% endblock %}
+
+{% block content %}
+
+<section>
+    <h3>{{ rovid }}</h3>
+    <p>{{ hosszu }}</p>
+    <a href="/"><button>Főoldalra</button></a>
+
+    
+    {% if next %}
+        <a href="/{{ next }}"><button>Vissza</button></a>
+    {% endif %}
+        
+    
+    {% if request.user.is_authenticated %}
+        {% include "registration/kijelentkezes.html" %}
+    {% endif %}
+</section>
+
+{% endblock%}
