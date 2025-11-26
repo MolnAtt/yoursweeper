@@ -9,6 +9,6 @@ urlpatterns = [
     path('', fooldal),
     path('ujjatek/', ujjatek),
     path('ujjatek/letrehoz/', ujjatek_letrehozasa),
-    # path('jatek/', jatekok),  felsoroljuk a rendelkezésre álló játékokat, ahol csatlakozni lehet azokhoz
+    path('jatek/', jatekok),
     path('jatek/join/', jatek_join),    
 ]

@@ -76,6 +76,12 @@ def jatek_join(request:HttpRequest):
 
     return render(request, 'chat/jatek.html', {'a_jatek': a_jatek})
 
+@login_required
+def jatekok(request:HttpRequest):
+    jatekok = Jatek.objects.filter(nyertes=None, masik=None)
+    return render(request, 'chat/jatekok.html', {'jatekok': jatekok})
+
+
 
 
 
