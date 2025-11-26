@@ -13,9 +13,7 @@ def room(request:HttpRequest, room_name):
     return render(request, "chat/room.html", {"room_name": room_name})
 
 def fooldal(request:HttpRequest):
-    template = 'chat/index.html'
-    context = {}
-    return render(request, template, context)
+    return render(request, 'chat/index.html', {})
 
 @login_required
 def ujjatek(request):
@@ -47,8 +45,8 @@ def ujjatek_letrehozasa(request:HttpRequest):
     if az_aknaszam < 0:
         return HttpResponseNotAllowed('Ez így egy kicsit nehéz lesz')
     
-    a_jatek = Jatek.objects.create(nev = a_nev, egyik = request.user, aknaszam=az_aknaszam).first()
-    return render(request, 'chat/jatek.html', {'a_jatek': a_jatek})
+    a_jatek = Jatek.objects.create(nev = a_nev, egyik = request.user, aknaszam=az_aknaszam)
+    return render(request, 'chat/yoursweeper.html', {'a_jatek': a_jatek})
     
 
 @login_required # enélkül nem tudsz request.user-re hivatkozni! # 1 pont
@@ -72,7 +70,7 @@ def jatek_join(request:HttpRequest):
         return HttpResponseForbidden('Lassú vagy, ezt már elhappolták')
 
     a_jatek.masik = request.user  #1 pont
-    a_jatek.save()    
+    a_jatek.save()
 
     return render(request, 'chat/jatek.html', {'a_jatek': a_jatek})
 

@@ -9,6 +9,6 @@ urlpatterns = [
     path('', fooldal),
     path('ujjatek/', ujjatek),
     path('ujjatek/letrehoz/', ujjatek_letrehozasa),
-    path('jatek/', jatekok),
-    path('jatek/join/', jatek_join),    
+    path('lobby/', jatekok),
+    path('lobby/join/', jatek_join),    
 ]
