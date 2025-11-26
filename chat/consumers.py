@@ -31,7 +31,7 @@ class ChatConsumer(WebsocketConsumer):
         # Itt kell kezdened ezzel valamit...
         # ...
 
-
+        
 
 
 
