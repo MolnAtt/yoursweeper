@@ -12,7 +12,10 @@
     {% comment %} Ezt még át kell írni úgy, hogy post request legyen! Újabb django verziók erre háklisak {% endcomment %}
     <p><a href="ujjatek/">Új játék indítása</a></p>
     <p><a href="lobby/">Belépés a játékba</a></p>
-    <p><a href="logout/">Kijelentkezés</a></p>    
+    <form action="{% url 'logout' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">Kijelentkezés</button>
+    </form>   
 
     {% else %}
 

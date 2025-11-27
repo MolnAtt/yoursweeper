@@ -4,7 +4,41 @@ h1{
     text-align: center;
 }
 
-.container{
+h2{
+    text-align: center;
+}
+h3{
+    text-align: center;
+}
+
+#egyik_player{
+    grid-area: egyik_player;
+}
+
+#masik_player{
+    grid-area: masik_player;
+}
+
+#egyik_palya{
+    grid-area: egyik_palya;
+}
+
+#masik_palya{
+    grid-area: masik_palya;
+}
+
+main{
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 500px 500px;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    "egyik_player masik_player"
+    "egyik_palya masik_palya";
+    gap:20px;
+}
+
+main .container{
     display: grid;
     grid-template-columns: repeat(15,20px);
     grid-template-rows: repeat(15,20px);
@@ -37,4 +71,3 @@ h1{
     border-bottom-color: #F04040;
     border-right-color: #F04040;
 }
-

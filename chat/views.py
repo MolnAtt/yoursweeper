@@ -1,19 +1,21 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponseNotAllowed, HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from .models import Jatek
 
-
-
-def index(request:HttpRequest):
-    return render(request, "chat/index.html")
-
-
 def room(request:HttpRequest, room_name):
     return render(request, "chat/room.html", {"room_name": room_name})
 
-def fooldal(request:HttpRequest):
+def index(request:HttpRequest):
     return render(request, 'chat/index.html', {})
+
+@login_required
+def play(request:HttpRequest, az_id:int):
+    a_jatek = Jatek.objects.filter(id=az_id).first()
+    if a_jatek==None: 
+        return HttpResponse('Nincs ilyen azonosítóval játék!')
+    return render(request, 'chat/yoursweeper.html', {'a_jatek': a_jatek})
+
 
 @login_required
 def ujjatek(request):
@@ -46,7 +48,8 @@ def ujjatek_letrehozasa(request:HttpRequest):
         return HttpResponseNotAllowed('Ez így egy kicsit nehéz lesz')
     
     a_jatek = Jatek.objects.create(nev = a_nev, egyik = request.user, aknaszam=az_aknaszam)
-    return render(request, 'chat/yoursweeper.html', {'a_jatek': a_jatek})
+    return redirect(f'/yoursweeper/play/{a_jatek.id}/')
+    # return render(request, 'chat/yoursweeper.html', {'a_jatek': a_jatek})
     
 
 @login_required # enélkül nem tudsz request.user-re hivatkozni! # 1 pont
@@ -56,15 +59,15 @@ def jatek_join(request:HttpRequest):
     if 'jatekid' not in request.POST.keys(): # 1 pont
         return HttpResponseBadRequest('Ez valami rosszindulatú próbálkozás, mert nincs jatekid kulcs!')
     
-    a_jatek = Jatek.objects.filter(id=request.POST['id']).first()
+    a_jatek = Jatek.objects.filter(id=request.POST['jatekid']).first()
 
     if a_jatek == None: # 1 pont
         return HttpResponseNotFound('Nincs ilyen játék')
 
     # a_jatek.egyik a játék létrehozója 
 
-    if  a_jatek.egyik == request.user: # (+1 pont)
-        return HttpResponseForbidden('Nem játszhatsz magaddal.')
+    # if  a_jatek.egyik == request.user: # (+1 pont)
+    #     return HttpResponseForbidden('Nem játszhatsz magaddal.')
     
     if  a_jatek.masik != None: # 1 pont
         return HttpResponseForbidden('Lassú vagy, ezt már elhappolták')
@@ -72,7 +75,9 @@ def jatek_join(request:HttpRequest):
     a_jatek.masik = request.user  #1 pont
     a_jatek.save()
 
-    return render(request, 'chat/jatek.html', {'a_jatek': a_jatek})
+    return redirect(f'/yoursweeper/play/{a_jatek.id}/')
+
+    # return render(request, 'chat/yoursweeper.html', {'a_jatek': a_jatek})
 
 @login_required
 def jatekok(request:HttpRequest):

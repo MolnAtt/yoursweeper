@@ -7,6 +7,14 @@
     <title>Játékok</title>
 </head>
 <body>
+
+    <form action="{% url 'logout' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">Kijelentkezés</button>
+    </form>
+    <a href="{% url 'index' %}">Vissza a főoldalra</a>
+
+
     {% for jatek in jatekok %}
 
     <form action="join/"  method="POST">

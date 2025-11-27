@@ -6,15 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aknakereső</title>
     <link rel="stylesheet" href="{% static 'chat/yoursweeper.css' %}">
+    {% comment %} 
+    Ehelyett fetch-csel dolgozunk
+    <script>
+        const aknaszam = {{ a_jatek.aknaszam }}; // fetch-csel szebb lenne! 
+    </script> 
+    {% endcomment %}
     <script src="{% static 'chat/yoursweeper.js' %}" defer></script>
 </head>
 <body>
-    <header><h1>Aknakereső</h1></header>
+    <header>
+        <h1>Yoursweeper</h1>
+        <h2>{{ a_jatek.nev }}</h2>
+    </header>
 
     <main>
-        <div class="container"> 
-            <!-- 15x15-ös tábla -->
+        <h3 id="egyik_player">{{a_jatek.egyik.username}}</h3>
+        <div id="egyik_palya" class="container"> 
+            {% comment %} <!-- 15x15-ös tábla --> {% endcomment %}
+        </div>
 
+        <h3 id="masik_player">{{a_jatek.masik.username}}</h3>
+        <div id="masik_palya" class="container"> 
+            {% comment %} <!-- 15x15-ös tábla --> {% endcomment %}
         </div>
     </main>
 </body>

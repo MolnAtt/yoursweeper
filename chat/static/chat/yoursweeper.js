@@ -46,25 +46,26 @@ function csupanullalista(){
     }
     return a;
 }
+//     divek_letrehozasa(melyik, egyik_palya, 15, 15, aknaszam);
 function divek_letrehozasa(x,y){
-    for (let i = 0; i < x; i++) {
-        for (let j = 0; j < y; j++) {
-            let div = document.createElement("div");
-            div.id = `${i} ${j}`;
-            div.onclick = balkatt;
-            // itt hagytuk abba
-            div.oncontextmenu = jobbkatt;
-            div.classList.add('nemkattintott');
-            document.querySelector(".container").appendChild(div);
+    for (const palya of [egyik_palya, masik_palya]) {
+        for (let i = 0; i < x; i++) {
+            for (let j = 0; j < y; j++) {
+                let div = document.createElement("div");
+                div.id = `${palya===egyik_palya ? 'egyik':'masik'}_${i}_${j}`;
+                div.onclick = balkatt;
+                // itt hagytuk abba
+                div.oncontextmenu = jobbkatt;
+                div.classList.add('nemkattintott');
+                palya.appendChild(div);
+            }
         }
     }
 }
 
-
-
 function melyikez(div){
-    [sx,sy] = div.id.split(" "); // ["9", "4"]
-    return [parseInt(sx), parseInt(sy)];
+    [melyik, sx,sy] = div.id.split("_"); // ["egyik", "9", "4"]
+    return [melyik, parseInt(sx), parseInt(sy)];
 }
 
 function ezadiv(x,y){
@@ -79,11 +80,10 @@ function balkatt(e){
     // 1. kiderítjük az e.targetből, hogy hova kattintottunk : x, y koordináta!
 
     // mezodiv.id // "9 4"
-    [x, y] = melyikez(mezodiv)
+    [melyik, x, y] = melyikez(mezodiv)
 
 
-    console.log(x);
-    console.log(y);
+    console.log([x,y]);
     
     // 2. map-ban megnézzük, hogy van-e ott akna, ha igen...
     console.log(map[x][y]);
@@ -199,10 +199,34 @@ function gyozelem(aknak_szama){
 }
 
 
+async function getch(url){
+    const response = await fetch(url);
+    const json_promise = await response.json();
+    return json_promise;
+}
+
+async function get_aknaszam(){
+    return await getch(`${window.location.origin}/yoursweeper/api/get/aknaszam/jatekid/${get_jatekid()}/`);
+}
+
+function utolso_eleme(lista){
+    return lista[lista.length-1];
+}
+
+function get_jatekid(){
+    return parseInt(utolso_eleme(window.location.pathname.split('/')));
+}
 
 
+async function melyik_jatekos_vagyok(){
+    return await getch(`${window.location.origin}/yoursweeper/api/get/melyik/jatekid/${get_jatekid()}/`);
+}
 
 
-divek_letrehozasa(15,15);
-let map = random_map_generalasa(40);
-
+async function generate_map(){
+    let aknaszam = await get_aknaszam();
+    let melyik = await melyik_jatekos_vagyok();
+    divek_letrehozasa(melyik, egyik_palya, 15, 15, aknaszam);
+    divek_letrehozasa(melyik, masik_palya, 15, 15, aknaszam);
+    
+}

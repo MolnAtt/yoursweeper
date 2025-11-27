@@ -21,5 +21,11 @@
         <button type="submit">Indítás</button>
     </div>
 </form>
+<form action="{% url 'logout' %}" method="POST">
+    {% csrf_token %}
+    <button type="submit">Kijelentkezés</button>
+    <a href="{% url 'index' %}">Vissza a főoldalra</a>
+
+</form>
 </body>
 </html>
