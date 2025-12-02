@@ -206,27 +206,31 @@ async function getch(url){
 }
 
 async function get_aknaszam(){
-    return await getch(`${window.location.origin}/yoursweeper/api/get/aknaszam/jatekid/${get_jatekid()}/`);
+    let szotar = await getch(`${window.location.origin}/yoursweeper/api/get/aknaszam/jatekid/${get_jatekid()}/`);
+    console.log("Mennyi az aknák száma?\n Szerver válasza:");
+    console.log(szotar);
+    return szotar['aknaszam'];
 }
 
-function utolso_eleme(lista){
-    return lista[lista.length-1];
+function utolso_elotti_eleme(lista){
+    return lista[lista.length-2];
 }
 
 function get_jatekid(){
-    return parseInt(utolso_eleme(window.location.pathname.split('/')));
+    return parseInt(utolso_elotti_eleme(window.location.pathname.split('/')));
 }
-
 
 async function melyik_jatekos_vagyok(){
-    return await getch(`${window.location.origin}/yoursweeper/api/get/melyik/jatekid/${get_jatekid()}/`);
+    let szotar = await getch(`${window.location.origin}/yoursweeper/api/get/melyik/jatekid/${get_jatekid()}/`);
+    console.log("Melyik játékos vagyok?\n Szerver válasza:");
+    console.log(szotar);
+    return szotar['melyik'];
 }
-
 
 async function generate_map(){
     let aknaszam = await get_aknaszam();
     let melyik = await melyik_jatekos_vagyok();
     divek_letrehozasa(melyik, egyik_palya, 15, 15, aknaszam);
-    divek_letrehozasa(melyik, masik_palya, 15, 15, aknaszam);
-    
+    divek_letrehozasa(melyik, masik_palya, 15, 15, aknaszam);   
 }
+

@@ -2,6 +2,7 @@ from django.urls import path
 
 from . import views
 from .views import *
+from .apis import *
 
 urlpatterns = [
     # path("", views.index, name="index"),
@@ -13,4 +14,10 @@ urlpatterns = [
     path('ujjatek/letrehoz/', ujjatek_letrehozasa),
     path('lobby/', jatekok, name='lobby'),
     path('lobby/join/', jatek_join),
+]
+
+# API parancsok
+urlpatterns += [
+    path('api/get/melyik/jatekid/<int:jatek_id>/', api_get_melyik),
+    path('api/get/aknaszam/jatekid/<int:jatek_id>/', api_get_aknaszam),
 ]
