@@ -5,14 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aknakereső</title>
-    <link rel="stylesheet" href="{% static 'chat/yoursweeper.css' %}">
-    {% comment %} 
-    Ehelyett fetch-csel dolgozunk
-    <script>
-        const aknaszam = {{ a_jatek.aknaszam }}; // fetch-csel szebb lenne! 
-    </script> 
-    {% endcomment %}
-    <script src="{% static 'chat/yoursweeper.js' %}" defer></script>
+    <link rel="stylesheet" href="{% static 'chat/css/yoursweeper.css' %}">
+    <script src="{% static 'chat/js/0_base.js' %}" defer></script>
+    <script src="{% static 'chat/js/1_fetch.js' %}" defer></script>
+    <script src="{% static 'chat/js/2_websocket.js' %}" defer></script>
+    <script src="{% static 'chat/js/3_chat.js' %}" defer></script>
+    <script src="{% static 'chat/js/4_jatek.js' %}" defer></script>
 </head>
 <body>
     <header>
@@ -31,5 +29,8 @@
             {% comment %} <!-- 15x15-ös tábla --> {% endcomment %}
         </div>
     </main>
+    <textarea id="chatlog" cols="100" rows="20"></textarea><br>
+    <input type="text" id="szoveginput">
+    <button id="kuldgomb">Küld</button>
 </body>
 </html>
